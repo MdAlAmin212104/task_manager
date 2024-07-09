@@ -1,8 +1,12 @@
-# React + Vite
+Live side : https://react-auth-private-b18c5.web.app/
+You can create a new user or use an already signed-in user
+or 
+admin login
+Login email : user@email.com
+password : 123456 ,
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+user login :
+email : ali@gmail.com
+password : 123456
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

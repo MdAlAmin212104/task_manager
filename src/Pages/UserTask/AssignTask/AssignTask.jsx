@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hook/useAuth";
 import useAxiosCommon from "../../../hook/useAxiosCommon";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const AssignTask = () => {
@@ -19,7 +19,7 @@ const AssignTask = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        if (!userId) return; // Exit early if userId is not available yet
+        if (!userId) return;
 
         const response = await axiosCommon.get(`/userTasks/${userId}`);
         setTasks(response.data);
@@ -82,18 +82,6 @@ const AssignTask = () => {
           </tbody>
         </table>
       </div>
-      {/* <ul>
-        {tasks.map((task) => (
-          <li key={task._id}>
-            <h3>{task.name}</h3>
-            <p>{task.description}</p>
-            <p>Status: {task.status}</p>
-            <button onClick={() => markCompleted(task._id)}>
-              Mark Completed
-            </button>
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 };
