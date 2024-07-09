@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import AddTask from "../Pages/AddTask/AddTask";
 import MyTask from "./MyTask/MyTask";
+import TaskUpdate from "../Pages/TaskUpdate/TaskUpdate";
 
 export const router = createBrowserRouter([
     {
@@ -30,6 +31,11 @@ export const router = createBrowserRouter([
         {
           path: "/myTask",
           element: <MyTask/>
+        },
+        {
+          path: `/update/:id`,
+          element: <TaskUpdate/>,
+          loader : ({ params }) => fetch(`${import.meta.env.VITE_URL}task/${params.id}`)
         },
 
       ]

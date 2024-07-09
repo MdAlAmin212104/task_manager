@@ -3,14 +3,18 @@ import useAxiosCommon from "../../hook/useAxiosCommon";
 import useAuth from "../../hook/useAuth";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { useState } from "react";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyTask = () => {
-    const [status, setStatus] = useState(null);
   const axiosCommon = useAxiosCommon();
   const { user } = useAuth();
-  const { data: TaskData, isLoading, error, refetch } = useQuery({
+  const {
+    data: TaskData,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: [user?.email, "TaskData"],
     queryFn: async () => {
       const res = await axiosCommon.get(`/task?email=${user?.email}`);
@@ -31,20 +35,48 @@ const MyTask = () => {
   }
 
   const handleStatusChange = async (id, newStatus) => {
-    setStatus(newStatus);
     try {
-      await axiosCommon.patch(`/task/${id}`, { status: newStatus })
-        .then(res => {
-            if(res.data.modifiedCount > 0 ){
-                Swal.fire("status updated")
-                refetch();
-            }
-        })
+      await axiosCommon
+        .patch(`/task/${id}`, { status: newStatus })
+        .then((res) => {
+          if (res.data.modifiedCount > 0) {
+            Swal.fire("status updated");
+            refetch();
+          }
+        });
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosCommon.delete(`/task/${id}`).then((res) => {
+            if (res.data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              refetch();
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    });
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -66,21 +98,22 @@ const MyTask = () => {
               <td>{task.name}</td>
               <td>{task.users.length}</td>
               <td>
-                <select onChange={(e) =>handleStatusChange(task._id, e.target.value)} className="select select-bordered">
-                  <option defaultValue={task.status}>
-                    {task.status}
-                  </option>
+                <select
+                  onChange={(e) => handleStatusChange(task._id, e.target.value)}
+                  className="select select-bordered"
+                >
+                  <option defaultValue={task.status}>{task.status}</option>
                   <option value="In Progress">In Progress</option>
                   <option value="Completed">Completed</option>
                 </select>
               </td>
               <td className="text-xl">
-                <button>
+                <Link to={`/update/${task._id}`}>
                   <FaEdit />
-                </button>
+                </Link>
               </td>
               <td className="text-xl">
-                <button>
+                <button onClick={() => handleDelete(task._id)}>
                   <MdDelete />
                 </button>
               </td>
