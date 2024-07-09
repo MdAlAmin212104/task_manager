@@ -46,6 +46,7 @@ const AddTask = () => {
         description,
         email : user.email,
         users: selectedUsersData,
+        status : "To-Do",
     };
 
     axiosCommon.post('/task', task)
@@ -129,7 +130,7 @@ const AddTask = () => {
             <div className="col-span-full sm:col-span-3">
               <input
                 type="submit"
-                value="Add Product"
+                value="Add Task"
                 className="w-full btn btn-primary"
               />
             </div>

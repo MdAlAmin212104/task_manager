@@ -4,8 +4,11 @@ import Main from "../Layout/Main";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import AddTask from "../Pages/AddTask/AddTask";
-import MyTask from "./MyTask/MyTask";
+import MyTask from "../Pages/MyTask/MyTask";
 import TaskUpdate from "../Pages/TaskUpdate/TaskUpdate";
+import AssignTask from "../Pages/UserTask/AssignTask/AssignTask";
+import Private from "../PrivateRoute/Private";
+import AdminPrivateRoute from "../PrivateRoute/AdminPrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -13,28 +16,32 @@ export const router = createBrowserRouter([
       element: <Main/>,
       children: [
         {
-            path: "/",
-            element: <Home/>
+          path: "/",
+          element: <Home/>
         },
         {
-            path: "/login",
-            element: <Login/>
+          path: "/assignTask",
+          element: <Private><AssignTask/></Private>
         },
         {
-            path: "/register",
-            element: <Register/>
+          path: "/login",
+          element: <Login/>
+        },
+        {
+          path: "/register",
+          element: <Register/>
         },
         {
           path: "/add",
-          element: <AddTask/>
+          element: <AdminPrivateRoute><AddTask/></AdminPrivateRoute>
         },
         {
           path: "/myTask",
-          element: <MyTask/>
+          element: <AdminPrivateRoute><MyTask/></AdminPrivateRoute>
         },
         {
           path: `/update/:id`,
-          element: <TaskUpdate/>,
+          element: <AdminPrivateRoute><TaskUpdate/></AdminPrivateRoute>,
           loader : ({ params }) => fetch(`${import.meta.env.VITE_URL}task/${params.id}`)
         },
 

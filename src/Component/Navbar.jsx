@@ -1,13 +1,21 @@
 import { NavLink } from "react-router-dom";
 import useAuth from "../hook/useAuth";
+import useAdmin from "../hook/useAdmin";
 
 const Navbar = () => {
     const { user, logout } = useAuth();
-    console.log(user);
+    const [ isAdmin] = useAdmin();
+
+
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/add">AddTask</NavLink></li>
-        <li><NavLink to="/myTask">My Task</NavLink></li>
+        
+        {
+          isAdmin ? <> 
+          <li><NavLink to="/add">AddTask</NavLink></li>
+          <li><NavLink to="/myTask">My Task</NavLink></li>
+          </> : <li><NavLink to="/assignTask">AssignTask</NavLink></li>
+        }
         {
           user? <button className="p-2 bg-slate-100 rounded-lg text-black ml-4 px-3" onClick={logout}>Logout</button> : 
           <>
