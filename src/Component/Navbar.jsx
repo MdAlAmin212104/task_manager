@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { AuthProvider } from "../AuthProvider/Provider";
 
 const Navbar = () => {
-    const { user } = useContext(AuthProvider)
+    const { user, logout } = useContext(AuthProvider)
     console.log(user);
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
@@ -46,6 +46,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
+        <button onClick={logout}>singOut</button>
         <a className="btn">Dashboard</a>
       </div>
     </div>
