@@ -6,8 +6,16 @@ const Navbar = () => {
     console.log(user);
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/login">Login</NavLink></li>
-        <li><NavLink to="/register">Register</NavLink></li>
+        <li><NavLink to="/add">AddTask</NavLink></li>
+        <li><NavLink to="/myTask">My Task</NavLink></li>
+        {
+          user? <button className="p-2 bg-slate-100 rounded-lg text-black ml-4 px-3" onClick={logout}>Logout</button> : 
+          <>
+            <li><NavLink to="/login">Login</NavLink></li>
+            <li><NavLink to="/register">Register</NavLink></li>
+          </>
+        }
+        
     </>
     
   return (
@@ -45,7 +53,6 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <button onClick={logout}>singOut</button>
         <a className="btn">Dashboard</a>
       </div>
     </div>
